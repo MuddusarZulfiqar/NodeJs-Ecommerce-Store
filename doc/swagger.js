@@ -32,6 +32,10 @@ const doc = {
       description: "Auth System", // Tag description
     },
     {
+      name: "User",
+      description: "User Management", // Tag description
+    },
+    {
       name: "Category",
       description: "Product Category", // Tag description
     },
