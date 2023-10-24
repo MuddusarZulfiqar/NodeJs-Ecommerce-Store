@@ -1,14 +1,17 @@
 const multer = require("multer");
-const cloudinary = require("cloudinary").v2;
-const { CloudinaryStorage } = require("multer-storage-cloudinary");
+const aws = require("aws-sdk");
+const multerS3 = require("multer-s3");
 const dotenv = require("dotenv");
 dotenv.config({ path: `config/config.env` });
-// Configure Cloudinary
-cloudinary.config({
-  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
-  api_key: process.env.CLOUDINARY_API_KEY,
-  api_secret: process.env.CLOUDINARY_API_SECRET,
+
+// Configure AWS
+aws.config.update({
+  accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+  secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+  region: process.env.AWS_REGION, // Set your desired AWS region
 });
+
+const s3 = new aws.S3();
 
 const generateUniqueFileName = (file) => {
   const originalName = file.originalname;
@@ -19,18 +22,24 @@ const generateUniqueFileName = (file) => {
   return `${originalName}-${timestamp}-${randomString}`;
 };
 
+// for folders
 const storage = (folder = "general") => {
-  const cloudinaryStorage = new CloudinaryStorage({
-    cloudinary: cloudinary,
-    params: {
-      folder: folder, // Specify the folder in your Cloudinary account
-      public_id: (req, file) => generateUniqueFileName(file), // Rename the file on upload
-      // format: async (req, file) => "png", // supports promises as well
+  const s3Storage = multerS3({
+    s3: s3,
+    bucket: process.env.AWS_BUCKET_NAME,
+    acl: "public-read", // Set the desired access control level
+    metadata: function (req, file, cb) {
+      cb(null, { fieldName: file.fieldname });
+    },
+    key: function (req, file, cb) {
+      const uniqueFileName = generateUniqueFileName(file);
+      const fileFolder = folder ? folder + "/" : ""; // Include the folder if specified
+      cb(null, `${fileFolder}${uniqueFileName}`);
     },
   });
 
   return multer({
-    storage: cloudinaryStorage,
+    storage: s3Storage,
   });
 };
 
