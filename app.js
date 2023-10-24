@@ -56,6 +56,11 @@ app.use((err, req, res, next) => {
 // ! import Routes
 app.use("/api/v1", appRoutes);
 
+/** Starting message */
+app.get("/", (req, res) => {
+  return res.status(200).send("Welcome to NodeJs E-commerce Backend");
+});
+
 // ! Swagger
 const swaggerUi = require("swagger-ui-express");
 const swaggerDocument = require("./doc/swagger.json");
