@@ -4,7 +4,7 @@ const OrderModel = require("../models/OrderModel");
 const ProductModel = require("../models/ProductModel");
 const dotenv = require("dotenv");
 const PaymentSession = require("../models/PaymentSession");
-dotenv.config({ path: `config/config.env` });
+dotenv.config();
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 
 // ! Create new order => /api/v1/order/create
