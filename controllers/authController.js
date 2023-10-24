@@ -126,7 +126,7 @@ const refreshToken = catchAsyncErrors(async (req, res, next) => {
   const token = req.cookies.token;
 
   try {
-    const newToken = await generateToken(req.UserModel._id);
+    const newToken = await generateToken(req.user._id);
     res.cookie("token", newToken, {
       expires: new Date(Date.now() + 24 * 60 * 60 * 1000), // * 1 day
       httpOnly: true,
