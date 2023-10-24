@@ -3,7 +3,7 @@ const cookieParser = require("cookie-parser");
 const dotenv = require("dotenv");
 const morgan = require("morgan");
 const dataBaseConnect = require("./database/db.js");
-const ErrorHandler = require("./middlewares/error.js");
+const ErrorHandler = require("./middlewares/error");
 const appRoutes = require("./routes/index");
 const cors = require("cors");
 const bodyParser = require("body-parser");
@@ -12,7 +12,7 @@ const bodyParser = require("body-parser");
 const app = express();
 
 // ! App configs
-dotenv.config();
+dotenv.config({ path: `config/config.env` });
 // Handling uncaught exceptions
 process.on("uncaughtException", (err) => {
   console.log("Server error: " + err.message);
@@ -55,10 +55,8 @@ app.use((err, req, res, next) => {
 
 // ! import Routes
 app.use("/api/v1", appRoutes);
-// Starting message
-app.get("/", (req, res) => {
-  return res.status(200).send("Welcome to NodeJs E-commerce Backend");
-});
+
+app;
 // ! Swagger
 const swaggerUi = require("swagger-ui-express");
 const swaggerDocument = require("./doc/swagger.json");
