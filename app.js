@@ -30,7 +30,12 @@ app.use((req, res, next) => {
 });
 
 app.use(cookieParser());
-app.use(cors());
+app.use(
+  cors({
+    origin: "https://nodejs-ecommerce-store-production.up.railway.app",
+    credentials: true,
+  })
+);
 app.use(morgan("dev"));
 app.use(express.urlencoded({ extended: true }));
 // ! starting the DataBase
