@@ -32,7 +32,10 @@ app.use((req, res, next) => {
 app.use(cookieParser());
 app.use(
   cors({
-    origin: "https://nodejs-ecommerce-store-production.up.railway.app",
+    origin: [
+      "https://nodejs-ecommerce-store-production.up.railway.app",
+      "http://localhost:8080",
+    ],
     credentials: true,
   })
 );
