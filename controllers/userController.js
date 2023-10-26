@@ -18,7 +18,7 @@ const updateProfile = catchAsyncErrors(async (req, res, next) => {
   if (!name || !email) {
     return next(new ErrorHandler("Please fill all the fields", 400));
   }
-  let userExists = await UserModel.findById(req.UserModel._id);
+  let userExists = await UserModel.findById(req.user._id);
   // ! Check if user exists
   if (!userExists) {
     return next(new ErrorHandler("User not found", 404));
@@ -77,7 +77,7 @@ const updateRole = catchAsyncErrors(async (req, res, next) => {
   if (!role || !email) {
     return next(new ErrorHandler("Please fill all the fields", 400));
   }
-  if (req.UserModel.email === email) {
+  if (req.user.email === email) {
     return next(new ErrorHandler("You can not change your role", 400));
   }
   let userExists = await UserModel.findOne({ email });
