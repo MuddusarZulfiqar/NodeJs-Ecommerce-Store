@@ -188,8 +188,14 @@ const resetPassword = catchAsyncErrors(async (req, res, next) => {
     #swagger.consumes = ['application/json']
     #swagger.produces = ['application/json']
     #swagger.parameters['token'] = {
-      in: 'query',
+      in: 'path',
       description: 'The token of the user',
+      required: true,
+      type: 'string',
+    }
+    #swagger.parameters['password'] = {
+      in: 'body',
+      description: 'The password of the user',
       required: true,
       type: 'string',
     }
@@ -197,6 +203,7 @@ const resetPassword = catchAsyncErrors(async (req, res, next) => {
 
   const { password } = req.body;
   const token = req.params.token;
+
   if (!password) {
     return next(new ErrorHandler("Please fill all the fields", 400));
   }

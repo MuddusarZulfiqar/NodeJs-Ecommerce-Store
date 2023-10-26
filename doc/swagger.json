@@ -241,13 +241,13 @@
         "parameters": [
           {
             "name": "token",
-            "in": "query",
+            "in": "path",
             "required": true,
             "type": "string",
             "description": "The token of the user"
           },
           {
-            "name": "body",
+            "name": "password",
             "in": "body",
             "schema": {
               "type": "object",
@@ -256,7 +256,9 @@
                   "example": "any"
                 }
               }
-            }
+            },
+            "description": "The password of the user",
+            "required": true
           }
         ],
         "responses": {
