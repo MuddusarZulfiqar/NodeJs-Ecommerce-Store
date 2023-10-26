@@ -21,9 +21,9 @@ const doc = {
       email: "muddusarzulfiqar@gmail.com",
     },
   },
-  host: "localhost:8080", // by default: 'localhost:3000'
+  host: "nodejs-ecommerce-store-production.up.railway.app", // by default: 'localhost:3000'
   basePath: "/api/v1", // by default: '/'
-  schemes: ["http"], // by default: ['http']
+  schemes: ["https"], // by default: ['http']
   consumes: ["application/json"], // by default: ['application/json']
   produces: ["application/json"], // by default: ['application/json']
   tags: [

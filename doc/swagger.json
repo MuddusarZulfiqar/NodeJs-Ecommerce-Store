@@ -9,7 +9,7 @@
       "email": "muddusarzulfiqar@gmail.com"
     }
   },
-  "host": "localhost:8080",
+  "host": "nodejs-ecommerce-store-production.up.railway.app",
   "basePath": "/api/v1",
   "tags": [
     {
@@ -34,7 +34,7 @@
     }
   ],
   "schemes": [
-    "http"
+    "https"
   ],
   "securityDefinitions": {
     "BearerAuth": {
