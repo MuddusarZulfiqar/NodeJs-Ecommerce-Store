@@ -258,7 +258,7 @@ const updatePassword = catchAsyncErrors(async (req, res, next) => {
   );
 
   if (!isPasswordMatched) {
-    return next(new ErrorHandler("Invalid credentials", 401));
+    return next(new ErrorHandler("Invalid password", 401));
   }
   // ! Hashing password
   const hashPassword = await generatePassword(newPassword);
