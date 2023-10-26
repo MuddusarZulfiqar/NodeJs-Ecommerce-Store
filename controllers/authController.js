@@ -250,9 +250,7 @@ const updatePassword = catchAsyncErrors(async (req, res, next) => {
   if (!currentPassword || !newPassword) {
     return next(new ErrorHandler("Please fill all the fields", 400));
   }
-  let userExists = await UserModel.findById(req.UserModel._id).select(
-    "+password"
-  );
+  let userExists = await UserModel.findById(req.user._id).select("+password");
   // ! Compare password
   const isPasswordMatched = await comparePassword(
     currentPassword,
