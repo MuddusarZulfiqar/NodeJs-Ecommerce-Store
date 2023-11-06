@@ -16,7 +16,7 @@ exports.newProduct = catchAsyncErrors(async (req, res, next) => {
             }]
   */
   const { name, price, description, category, stock } = req.body;
-
+  console.log(req.body);
   // Check for required fields
   if (!name || !price || !description || !category || !stock) {
     return next(new ErrorHandler("Please provide all fields", 400));
