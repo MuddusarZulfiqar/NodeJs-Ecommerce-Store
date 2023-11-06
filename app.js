@@ -39,6 +39,7 @@ app.use(
       "http://192.168.5.76",
     ],
     credentials: true,
+    exposedHeaders: ["set-cookie"],
   })
 );
 app.use(morgan("dev"));
