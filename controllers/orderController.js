@@ -216,7 +216,7 @@ exports.getAllOrders = catchAsyncErrors(async (req, res, next) => {
       .populate("user", "name email")
       .populate("products.product", "name price -_id");
   } else {
-    orders = await OrderModel.find()
+    orders = await OrderModel.find({})
       .populate("user", "name email")
       .populate("products.product", "name price -_id");
   }
