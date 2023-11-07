@@ -780,6 +780,34 @@
         ]
       }
     },
+    "/order/get/by-user": {
+      "get": {
+        "tags": [
+          "Order"
+        ],
+        "summary": "Get all orders by user",
+        "description": "",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
+      }
+    },
     "/order/{id}": {
       "get": {
         "tags": [
