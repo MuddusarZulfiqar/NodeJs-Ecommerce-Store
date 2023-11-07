@@ -80,6 +80,7 @@ const loginUser = catchAsyncErrors(async (req, res, next) => {
   res.cookie("token", token, {
     expires: new Date(Date.now() + 24 * 60 * 60 * 1000),
     httpOnly: false,
+    sameSite: "none",
   });
 
   res.status(200).json({
@@ -105,6 +106,7 @@ const logoutUser = catchAsyncErrors(async (req, res, next) => {
   res.cookie("token", null, {
     expires: new Date(Date.now()),
     httpOnly: false,
+    sameSite: "none",
   });
   res.status(200).json({
     success: true,
@@ -130,6 +132,7 @@ const refreshToken = catchAsyncErrors(async (req, res, next) => {
     res.cookie("token", newToken, {
       expires: new Date(Date.now() + 24 * 60 * 60 * 1000), // * 1 day
       httpOnly: false,
+      sameSite: "none",
     });
     res.status(200).json({
       success: true,
