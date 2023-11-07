@@ -34,9 +34,7 @@ app.use(
   cors({
     origin: [
       "http://localhost:8080",
-      "https://nodejs-ecommerce-store-production.up.railway.app/",
-      "http://192.168.5.76:8080",
-      "http://192.168.5.76",
+      "https://nodejs-ecommerce-store-production.up.railway.app",
     ],
     credentials: true,
     exposedHeaders: ["set-cookie"],
