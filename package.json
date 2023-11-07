@@ -10,7 +10,6 @@
     "swagger-autogen": "node ./doc/swagger.js"
   },
   "keywords": [],
-  "proxy": "http://192.168.5.76:8080",
   "author": "",
   "license": "ISC",
   "dependencies": {

@@ -228,6 +228,28 @@ exports.getAllOrders = catchAsyncErrors(async (req, res, next) => {
   });
 });
 
+// ! Get all orders by user => /api/v1/order/get/by-user
+exports.getAllOrdersByUser = catchAsyncErrors(async (req, res, next) => {
+  /* 
+        #swagger.tags = ['Order']
+        #swagger.summary = 'Get all orders by user'
+        #swagger.consumes = ['application/json']
+        #swagger.produces = ['application/json']
+        #swagger.security = [{
+            BearerAuth: []
+            }]
+  */
+
+  const orders = await OrderModel.find({ user: req.user._id })
+    .populate("user", "name email")
+    .populate("products.product", "name price -_id");
+  res.json({
+    success: true,
+    message:
+      orders.length > 0 ? `Orders found successfully` : `No orders found`,
+    data: orders,
+  });
+});
 // ! Get single order => /api/v1/order/:id
 
 exports.getSingleOrder = catchAsyncErrors(async (req, res, next) => {
