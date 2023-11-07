@@ -27,7 +27,6 @@ exports.createOrder = catchAsyncErrors(async (req, res, next) => {
   */
 
   const { products, address, phone } = req.body;
-  console.log(req.originalUrl);
   const userId = req.user._id;
 
   // ! Check validation
@@ -78,7 +77,6 @@ exports.createOrder = catchAsyncErrors(async (req, res, next) => {
       };
     }),
   });
-  console.log(session);
   // ! Create Order Session
   await PaymentSession.create({
     user: req.user._id,
@@ -103,7 +101,6 @@ exports.createOrder = catchAsyncErrors(async (req, res, next) => {
 });
 
 async function handlePaymentSuccess(session) {
-  console.log(session);
   // Update PaymentSession for a successful payment
   const paymentSession = await PaymentSession.findOneAndUpdate(
     { session: session.id },
@@ -113,7 +110,7 @@ async function handlePaymentSuccess(session) {
     },
     { new: true }
   );
-  console.log(paymentSession);
+
   // Get All products and update their stock
   const allProducts = await ProductModel.find({
     _id: { $in: paymentSession.products.map((product) => product.product) },
