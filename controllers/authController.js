@@ -82,6 +82,7 @@ const loginUser = catchAsyncErrors(async (req, res, next) => {
     message: "User logged in successfully",
     data: {
       token,
+      user: userExists,
     },
   });
 });
