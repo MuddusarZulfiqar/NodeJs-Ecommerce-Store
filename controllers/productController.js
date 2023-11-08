@@ -85,6 +85,12 @@ exports.getAllProducts = catchAsyncErrors(async (req, res, next) => {
             required: false,
             type: 'integer',
           }
+          #swagger.parameters['category'] = {
+            in: 'query',
+            description: 'The category name',
+            required: false,
+            type: 'integer',
+          }
           #swagger.parameters['name'] = {
             in: 'query',
             description: 'Search Product by name',
@@ -110,7 +116,7 @@ exports.getAllProducts = catchAsyncErrors(async (req, res, next) => {
   const productName = req.query.name || "";
   const minPrice = parseFloat(req.query.minPrice) || 0;
   const maxPrice = parseFloat(req.query.maxPrice) || Infinity;
-
+  const category = req.query.category || "";
   // Calculate the skip value for pagination
   const skip = (page - 1) * limit;
 
@@ -118,6 +124,7 @@ exports.getAllProducts = catchAsyncErrors(async (req, res, next) => {
   const query = {
     name: { $regex: productName, $options: "i" }, // Case-insensitive search by product name
     price: { $gte: minPrice, $lte: maxPrice }, // Price range filter
+    category: category, // Category filter
   };
 
   const count = await ProductModel.countDocuments(query);

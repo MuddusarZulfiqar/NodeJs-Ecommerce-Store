@@ -148,6 +148,13 @@
         "produces": [
           "application/json"
         ],
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
         "responses": {
           "200": {
             "description": "OK"
@@ -175,6 +182,13 @@
         ],
         "produces": [
           "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
         ],
         "responses": {
           "200": {
@@ -277,6 +291,11 @@
         "description": "",
         "parameters": [
           {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
             "name": "body",
             "in": "body",
             "schema": {
@@ -321,6 +340,11 @@
           "application/json"
         ],
         "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          },
           {
             "name": "newCategory",
             "in": "body",
@@ -418,6 +442,11 @@
             "required": true,
             "type": "string",
             "description": "Category slug."
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
           }
         ],
         "responses": {
@@ -455,6 +484,11 @@
             "required": true,
             "type": "string",
             "description": "Category slug."
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
           },
           {
             "name": "updateCategory",
@@ -495,6 +529,11 @@
           "application/json"
         ],
         "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          },
           {
             "name": "body",
             "in": "body",
@@ -560,6 +599,13 @@
             "name": "limit",
             "in": "query",
             "description": "The limit of products per page",
+            "required": false,
+            "type": "integer"
+          },
+          {
+            "name": "category",
+            "in": "query",
+            "description": "The category name",
             "required": false,
             "type": "integer"
           },
@@ -641,6 +687,11 @@
             "required": true,
             "type": "string",
             "description": "Category slug."
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
           }
         ],
         "responses": {
@@ -678,6 +729,11 @@
             "required": true,
             "type": "string",
             "description": "Product slug."
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
           },
           {
             "name": "updatedProduct",
@@ -719,6 +775,11 @@
         ],
         "parameters": [
           {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
             "name": "newOrder",
             "in": "body",
             "description": "Order information.",
@@ -758,6 +819,11 @@
         ],
         "parameters": [
           {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
             "name": "status",
             "in": "query",
             "description": "Status Order",
@@ -792,6 +858,13 @@
         ],
         "produces": [
           "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
         ],
         "responses": {
           "200": {
@@ -828,6 +901,11 @@
             "required": true,
             "type": "string",
             "description": "Order ID."
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
           }
         ],
         "responses": {
@@ -863,6 +941,11 @@
             "required": true,
             "type": "string",
             "description": "Order ID."
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
           },
           {
             "name": "updateOrder",
@@ -928,6 +1011,13 @@
         "produces": [
           "application/json"
         ],
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
         "responses": {
           "200": {
             "description": "OK"
@@ -957,6 +1047,11 @@
           "application/json"
         ],
         "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          },
           {
             "name": "body",
             "in": "body",
@@ -1003,6 +1098,11 @@
         ],
         "parameters": [
           {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
             "name": "body",
             "in": "body",
             "schema": {
@@ -1047,6 +1147,11 @@
           "application/json"
         ],
         "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          },
           {
             "name": "email",
             "in": "query",
@@ -1096,6 +1201,13 @@
         ],
         "produces": [
           "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
         ],
         "responses": {
           "200": {
