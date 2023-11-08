@@ -214,11 +214,11 @@ exports.getAllOrders = catchAsyncErrors(async (req, res, next) => {
   if (status) {
     orders = await OrderModel.find({ status: status })
       .populate("user", "name email")
-      .populate("products.product", "name price -_id");
+      .populate("products.product", "name price images -_id");
   } else {
     orders = await OrderModel.find({})
       .populate("user", "name email")
-      .populate("products.product", "name price -_id");
+      .populate("products.product", "name price images -_id");
   }
   res.json({
     success: true,
@@ -242,7 +242,7 @@ exports.getAllOrdersByUser = catchAsyncErrors(async (req, res, next) => {
 
   const orders = await OrderModel.find({ user: req.user._id })
     .populate("user", "name email")
-    .populate("products.product", "name price -_id");
+    .populate("products.product", "name price images -_id");
   res.json({
     success: true,
     message:
