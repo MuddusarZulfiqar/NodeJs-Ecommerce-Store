@@ -34,7 +34,7 @@ app.use(
   cors({
     origin: [
       "http://localhost:8080",
-      "https://react-boilerplate-lilac-delta.vercel.app",
+      "https://react-boilerplate-git-cookie-base-route-muddusars-projects.vercel.app",
     ],
     credentials: true,
   })
