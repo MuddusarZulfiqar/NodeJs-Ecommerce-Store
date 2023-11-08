@@ -34,7 +34,7 @@ app.use(
   cors({
     origin: [
       "http://localhost:8080",
-      "https://5012-162-12-210-2.ngrok-free.app",
+      "https://react-boilerplate-lilac-delta.vercel.app",
     ],
     credentials: true,
   })
