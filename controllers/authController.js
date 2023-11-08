@@ -76,13 +76,6 @@ const loginUser = catchAsyncErrors(async (req, res, next) => {
 
   // ! Generate token
   const token = await generateToken(userExists._id);
-  // send response
-  res.cookie("token", token, {
-    expires: new Date(Date.now() + 24 * 60 * 60 * 1000),
-    httpOnly: true,
-    sameSite: "none",
-    secure: true,
-  });
 
   res.status(200).json({
     success: true,
@@ -104,12 +97,6 @@ const logoutUser = catchAsyncErrors(async (req, res, next) => {
     BearerAuth: []
   }]
   */
-  res.cookie("token", null, {
-    expires: new Date(Date.now()),
-    httpOnly: true,
-    sameSite: "none",
-    secure: true,
-  });
   res.status(200).json({
     success: true,
     message: "User logged out successfully",
@@ -127,16 +114,8 @@ const refreshToken = catchAsyncErrors(async (req, res, next) => {
     BearerAuth: []
   }]
   */
-  const token = req.cookies.token;
-
   try {
     const newToken = await generateToken(req.user._id);
-    res.cookie("token", newToken, {
-      expires: new Date(Date.now() + 24 * 60 * 60 * 1000), // * 1 day
-      httpOnly: true,
-      sameSite: "none",
-      secure: true,
-    });
     res.status(200).json({
       success: true,
       message: "Token refreshed successfully",
