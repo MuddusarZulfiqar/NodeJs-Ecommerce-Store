@@ -110,14 +110,16 @@ exports.getAllProducts = catchAsyncErrors(async (req, res, next) => {
   const productName = req.query.name || "";
   const minPrice = parseFloat(req.query.minPrice) || 0;
   const maxPrice = parseFloat(req.query.maxPrice) || Infinity;
-
+  const category = req.query.category || "";
   // Calculate the skip value for pagination
   const skip = (page - 1) * limit;
 
   // Build the query object
+  const categoryObj = await CategoryModel.findOne({ slug: category });
   const query = {
     name: { $regex: productName, $options: "i" }, // Case-insensitive search by product name
     price: { $gte: minPrice, $lte: maxPrice }, // Price range filter
+    category: categoryObj ? categoryObj._id : { $ne: null }, // Category filter
   };
 
   const count = await ProductModel.countDocuments(query);
