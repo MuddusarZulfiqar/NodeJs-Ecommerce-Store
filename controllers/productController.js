@@ -116,6 +116,8 @@ exports.getAllProducts = catchAsyncErrors(async (req, res, next) => {
 
   // Build the query object
   const categoryObj = await CategoryModel.findOne({ slug: category });
+  if (category && !categoryObj)
+    return next(new ErrorHandler("No Product Found", 404));
   const query = {
     name: { $regex: productName, $options: "i" }, // Case-insensitive search by product name
     price: { $gte: minPrice, $lte: maxPrice }, // Price range filter
