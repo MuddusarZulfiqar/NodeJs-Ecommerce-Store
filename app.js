@@ -32,7 +32,10 @@ app.use((req, res, next) => {
 app.use(cookieParser());
 app.use(
   cors({
-    origin: "http://localhost:8080",
+    origin: [
+      "http://localhost:8080",
+      "https://5012-162-12-210-2.ngrok-free.app/",
+    ],
     credentials: true,
   })
 );
