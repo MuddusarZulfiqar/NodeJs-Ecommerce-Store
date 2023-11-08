@@ -79,7 +79,7 @@ const loginUser = catchAsyncErrors(async (req, res, next) => {
   // send response
   res.cookie("token", token, {
     expires: new Date(Date.now() + 24 * 60 * 60 * 1000),
-    httpOnly: false,
+    httpOnly: true,
     sameSite: "none",
     secure: true,
   });
@@ -106,7 +106,7 @@ const logoutUser = catchAsyncErrors(async (req, res, next) => {
   */
   res.cookie("token", null, {
     expires: new Date(Date.now()),
-    httpOnly: false,
+    httpOnly: true,
     sameSite: "none",
     secure: true,
   });
@@ -133,7 +133,7 @@ const refreshToken = catchAsyncErrors(async (req, res, next) => {
     const newToken = await generateToken(req.user._id);
     res.cookie("token", newToken, {
       expires: new Date(Date.now() + 24 * 60 * 60 * 1000), // * 1 day
-      httpOnly: false,
+      httpOnly: true,
       sameSite: "none",
       secure: true,
     });
