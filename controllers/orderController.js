@@ -59,12 +59,45 @@ exports.createOrder = catchAsyncErrors(async (req, res, next) => {
     total += foundProduct.price * product.quantity;
   });
 
-  // Create Order
-  // ... (rest of your code)
-
-  // Create Order Session
-  // ... (rest of your code)
-
+  // ! Create Order
+  const session = await stripe.checkout.sessions.create({
+    payment_method_types: ["card"],
+    mode: "payment",
+    success_url: `${process.env.FRONTEND_URL}/order/success`,
+    cancel_url: `${process.env.FRONTEND_URL}/order/cancel`,
+    customer_email: req.user.email,
+    client_reference_id: userId,
+    line_items: products.map((product) => {
+      const foundProduct = allProducts.find(
+        (p) => p._id.toString() === product.product.toString()
+      );
+      return {
+        price_data: {
+          currency: "usd",
+          product_data: {
+            name: foundProduct.name,
+            images: [foundProduct.images[0]],
+          },
+          unit_amount: foundProduct.price,
+        },
+        quantity: product.quantity,
+      };
+    }),
+  });
+  // ! Create Order Session
+  await PaymentSession.create({
+    user: req.user._id,
+    session: session.id,
+    paymentId: session.payment_intent || "null",
+    // Create an order ID here 6 digit random number
+    orderId: Math.floor(100000 + Math.random() * 900000),
+    total: session.amount_total,
+    status: "pending",
+    paymentStatus: session.payment_status,
+    products: products,
+    address: address,
+    phone: phone,
+  });
   // Session created
   res.json({
     success: true,
