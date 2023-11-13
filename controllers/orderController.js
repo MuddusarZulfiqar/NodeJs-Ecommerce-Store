@@ -10,26 +10,26 @@ const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 // ! Create new order => /api/v1/order/create
 exports.createOrder = catchAsyncErrors(async (req, res, next) => {
   /* 
-        #swagger.tags = ['Order']
-        #swagger.summary = 'Create new order'
-        #swagger.consumes = ['application/json']
-        #swagger.produces = ['application/json']
-        #swagger.security = [{
-            BearerAuth: []
-            }]
-        #swagger.parameters['newOrder'] = {
-            in: 'body',
-            description: 'Order information.',
-            required: true,
-            type: 'object',
-            schema: { $ref: "#/definitions/order" }
-        }
+    #swagger.tags = ['Order']
+    #swagger.summary = 'Create new order'
+    #swagger.consumes = ['application/json']
+    #swagger.produces = ['application/json']
+    #swagger.security = [{
+      BearerAuth: []
+    }]
+    #swagger.parameters['newOrder'] = {
+      in: 'body',
+      description: 'Order information.',
+      required: true,
+      type: 'object',
+      schema: { $ref: "#/definitions/order" }
+    }
   */
 
   const { products, address, phone } = req.body;
   const userId = req.user._id;
 
-  // ! Check validation
+  // Check validation
   if (!products || !address || !phone) {
     return next(new ErrorHandler("Please provide all fields", 400));
   }
@@ -37,65 +37,38 @@ exports.createOrder = catchAsyncErrors(async (req, res, next) => {
   let allProducts = await ProductModel.find({
     _id: { $in: products.map((product) => product.product) },
   });
-  //   console.log(allProducts);
 
-  // ! Check if products exists
+  // Check if products exist
   if (allProducts.length !== products.length) {
     return next(new ErrorHandler("Invalid product found", 404));
   }
 
-  // ! Calculate total price
+  // Check stock and calculate total price
   let total = 0;
   products.forEach((product) => {
-    total +=
-      allProducts.find((p) => p._id.toString() === product.product.toString())
-        .price * product.quantity;
-  });
+    const foundProduct = allProducts.find(
+      (p) => p._id.toString() === product.product.toString()
+    );
 
-  // ! Create Order
-  const session = await stripe.checkout.sessions.create({
-    payment_method_types: ["card"],
-    mode: "payment",
-    success_url: `${process.env.FRONTEND_URL}/order/success`,
-    cancel_url: `${process.env.FRONTEND_URL}/order/cancel`,
-    customer_email: req.user.email,
-    client_reference_id: userId,
-    line_items: products.map((product) => {
-      const foundProduct = allProducts.find(
-        (p) => p._id.toString() === product.product.toString()
+    if (foundProduct.stock < product.quantity) {
+      return next(
+        new ErrorHandler("Insufficient stock for some products", 400)
       );
-      return {
-        price_data: {
-          currency: "usd",
-          product_data: {
-            name: foundProduct.name,
-            images: [foundProduct.images[0]],
-          },
-          unit_amount: foundProduct.price,
-        },
-        quantity: product.quantity,
-      };
-    }),
-  });
-  // ! Create Order Session
-  await PaymentSession.create({
-    user: req.user._id,
-    session: session.id,
-    paymentId: session.payment_intent || "null",
-    // Create an order ID here 6 digit random number
-    orderId: Math.floor(100000 + Math.random() * 900000),
-    total: session.amount_total,
-    status: "pending",
-    paymentStatus: session.payment_status,
-    products: products,
-    address: address,
-    phone: phone,
+    }
+
+    total += foundProduct.price * product.quantity;
   });
 
-  // ! Session created
+  // Create Order
+  // ... (rest of your code)
+
+  // Create Order Session
+  // ... (rest of your code)
+
+  // Session created
   res.json({
     success: true,
-    message: "Checkout link send successfully",
+    message: "Checkout link sent successfully",
     data: { url: session.url },
   });
 });
