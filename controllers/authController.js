@@ -150,7 +150,7 @@ const forgotPassword = catchAsyncErrors(async (req, res, next) => {
   const token = await generateToken(userExists._id, "10m");
 
   // ! Create reset password url
-  const resetUrl = `${process.env.FRONTEND_URL}/password/reset/${token}`;
+  const resetUrl = `${process.env.FRONTEND_URL}/password/reset?token=${token}`;
 
   // ! Add reset password token to user
   userExists.resetPasswordToken = token;
